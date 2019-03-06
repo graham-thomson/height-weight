@@ -1,0 +1,85 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Height and Weight Model</title>
+    <style type="text/css">
+        body{margin:40px auto;max-width:650px;line-height:1.6;font-size:18px;color:#444;padding:0 10px}
+        h1,h2,h3{line-height:1.2}
+        th,td{border-bottom: 1px solid #ddd;padding: 10px;text-align: left;}
+        tr:hover {background-color: #f5f5f5;}
+    </style>
+</head>
+<body>
+<h4>Enter Height and Weight:</h4>
+
+<ul>
+    <li>Enter Height in inches unless you check 'Use Metric', then in meters.</li>
+    <li>Enter Weight in pounds unless you check 'Use Metric', then in kilograms.</li>
+</ul>
+
+{% from "_formhelpers.html" import render_field %}
+<form method=post>
+  <dl>
+    {{ render_field(form.height) }}
+    {{ render_field(form.weight) }}
+    {{ render_field(form.metric) }}
+  </dl>
+  <p><input type=submit value="Get stats">
+</form>
+
+{% if prob_male and prob_female %}
+    <h4>Gender Classification Model:</h4>
+    {% if guess_male %}
+    You are <em>probably</em> a male.
+    {% else %}
+    You are <em>probably</em> a female.
+    {% endif %}
+    There is a {{ prob_male }}% chance that you are a male and a {{ prob_female }}% chance your are female based
+on your entered height, weight, this model, <b>and</b> this dataset <em>alone</em>.
+{% endif %}
+
+{% if model_perf %}
+<br>
+This is based on a binary classification model that has the following test metrics.
+The data is from <a href="https://www.kaggle.com/mustafaali96/weight-height/version/1">Kaggle</a>.
+For more information on these metrics,
+see <a href="https://en.wikipedia.org/wiki/Confusion_matrix">Confusion Matrix</a>.
+<table>
+    <tr>
+        <th colspan="2">Model Metrics</th>
+    </tr>
+      <tr>
+        <th>Metric</th>
+        <th>Value</th>
+      </tr>
+    {% for k, v in model_perf.items() %}
+      <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+      </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% if stats %}
+<br>
+<h4>Height/Weight Statistics:</h4>
+The following are metrics regarding where your particular height and weight falls in terms of percentile and
+your <a href="https://en.wikipedia.org/wiki/Body_mass_index">Body Mass Index (BMI)</a>.
+<table>
+      <tr>
+        <th>Statistic</th>
+        <th>Value</th>
+      </tr>
+    {% for k, v in stats.items() %}
+      <tr>
+        <td>{{k}}</td>
+        <td>{{v}}</td>
+      </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+</body>
+</html>
