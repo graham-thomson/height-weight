@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.3">
+	<Header>
+		<Application name="JPMML-SkLearn" version="1.6.1"/>
+		<Timestamp>2020-06-18T01:41:04Z</Timestamp>
+	</Header>
+	<DataDictionary>
+		<DataField name="Gender" optype="categorical" dataType="double">
+			<Value value="0.0"/>
+			<Value value="1.0"/>
+		</DataField>
+		<DataField name="Height" optype="continuous" dataType="double"/>
+		<DataField name="Weight" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<RegressionModel functionName="classification" normalizationMethod="logit">
+		<MiningSchema>
+			<MiningField name="Gender" usageType="target"/>
+			<MiningField name="Height"/>
+			<MiningField name="Weight"/>
+		</MiningSchema>
+		<Output>
+			<OutputField name="probability(0.0)" optype="continuous" dataType="double" feature="probability" value="0.0"/>
+			<OutputField name="probability(1.0)" optype="continuous" dataType="double" feature="probability" value="1.0"/>
+		</Output>
+		<RegressionTable intercept="1.6099604450852911" targetCategory="1.0">
+			<NumericPredictor name="Height" coefficient="-0.5157566310919904"/>
+			<NumericPredictor name="Weight" coefficient="0.20222453400252297"/>
+		</RegressionTable>
+		<RegressionTable intercept="0.0" targetCategory="0.0"/>
+	</RegressionModel>
+</PMML>
